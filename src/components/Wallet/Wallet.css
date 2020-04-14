@@ -1,0 +1,21 @@
+.wallet {
+    position: relative; 
+    text-align: center;   
+  } 
+  
+  .wallet__img {
+    width: 150px;
+    height: auto;
+    margin-top: 5px;
+  }
+  
+  .wallet--total {
+    display: flex;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;  
+    font-weight: bold;
+    font-size: 30px;
+  }

@@ -1,0 +1,12 @@
+.menu {
+  display: flex;
+  background: #5ABDF4;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-bottom: 25px;
+    
+  max-height: 40px;
+  min-height: 40px;
+  width: auto;
+
+ }
