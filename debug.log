@@ -1,0 +1,7 @@
+[0426/160459.650:ERROR:scoped_process_suspend.cc(31)] NtSuspendProcess: An attempt was made to access an exiting process. (0xc000010a)
+[0426/160459.654:ERROR:process_info.cc(118)] ReadProcessMemory bool __cdecl crashpad::(anonymous namespace)::ReadStruct(HANDLE, crashpad::WinVMAddress, T *) [T = crashpad::process_types::PEB<crashpad::process_types::internal::Traits64>]: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[0426/160459.655:ERROR:process_info.cc(551)] ReadProcessData failed
+[0426/160630.540:ERROR:process_info.cc(329)] VirtualQueryEx: Access is denied. (0x5)
+[0426/160630.540:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0426/160630.541:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
+[0426/160630.541:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)

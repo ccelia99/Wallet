@@ -4,7 +4,7 @@ import Content from '../Content/Content';
 function Settings(props) {
     return (
       <Content>
-        <h2>Settings</h2>
+        <h1>Settings</h1>
       </Content>
     );
   }

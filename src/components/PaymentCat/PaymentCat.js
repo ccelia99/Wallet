@@ -12,16 +12,16 @@ class PaymentCat extends React.Component {
         return (
         <div className="paymentcat">
             <div className="paymentcat__row">
-            <div className="food"> <img src={food} alt=""/></div>
-            <div className="varioussmall"> <img src={varioussmall} alt="" /></div>
+            <div className="Food"> <img src={food} alt=""/></div>
+            <div className="Varioussmall"> <img src={varioussmall} alt="" /></div>
             </div>
             <div className="paymentcat__row">
-            <div className="pharmacy"> <img src={pharmacy} alt="" /></div>
-            <div className="meze"> <img src={meze} alt="" /></div>
+            <div className="Pharmacy"> <img src={pharmacy} alt="" /></div>
+            <div className="Meze"> <img src={meze} alt="" /></div>
             </div>
             <div className="paymentcat__row">
-            <div className="animals"><img src={animals} alt="" /></div>
-            <div className="gas"><img src={gas} alt="" /></div>
+            <div className="Animals"><img src={animals} alt="" /></div>
+            <div className="Gas"><img src={gas} alt="" /></div>
             </div>
         </div>
         );

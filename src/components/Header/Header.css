@@ -3,6 +3,12 @@
     justify-content: center;
     padding:22.5px 118.5px;
     width: auto;
+    max-height: 120px;
+    font-family: 'Roboto', cursive;
+    text-align: center;    
+    font-style: normal;
+    font-weight: normal;
+    font-size: 64px;  
      
     color: #FFFFFF;
     background: #5ABDF4;

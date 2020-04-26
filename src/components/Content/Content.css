@@ -1,4 +1,7 @@
 .content {
+
+    max-height: 630px;
+    padding-bottom: 10px;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     position: relative;

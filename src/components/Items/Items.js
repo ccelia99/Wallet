@@ -1,18 +1,28 @@
 import React, {Component} from 'react';
-import Header from '../Header/Header';
-import Wallet from '../Wallet/Wallet';
 import Transaction from '../Transaction/Transaction';
 import PaymentCat from '../PaymentCat/PaymentCat';
 
-function Items(props) {
+
+class Items extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+       
+    };
+  }
+
+ 
+
+  render() {
     return (
       <div>
-        <Header />
-        <Wallet />
-        <Transaction />
+        
+        <Transaction onFormSubmit={this.props.onFormSubmit}  />
         <PaymentCat />
       </div> 
-    );
+      );
+    }
   }
   
   export default Items;

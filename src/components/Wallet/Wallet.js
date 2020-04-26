@@ -1,17 +1,35 @@
 import React from 'react';
-import wallet from '../icons/icon-wallet.png';
+
 import './Wallet.css';
 
 
 class Wallet extends React.Component {
-    render() {
-      return (
-        <div className="wallet">
-          <img src={wallet} alt="" className="wallet__img" />
-          <div className="wallet--total" >175.20</div>
-        </div>
-      );
-    }
+
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+        
+            data : 0.00
+        
+    };
+    // setChanged = setChanged.bind(this);
   }
 
+  
+  render() {
+    return (
+      <>
+      <div className="wallet">         
+        
+        <div  className="wallet--saldo"> {parseFloat(this.state.data).toFixed(2) } </div>
+        <p>Wallet : {this.props.data}</p>
+        
+      </div>
+      
+     
+      </>
+    );
+  }
+}
   export default Wallet;

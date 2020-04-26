@@ -1,0 +1,39 @@
+.actionCard {
+    background: whitesmoke;      
+    border: 1px solid #5ABDF4;
+    justify-content: left;
+    max-width: 400px;    
+}
+  
+.actionCard__row {
+    display: flex;    
+}
+  
+.actionCard__sum {
+    width: 120px;
+    font-weight: bold;
+    text-align: right;
+    padding: 15px 10px;
+    border-right: 2px solid #5ABDF4;
+
+}
+.actionCard__date {
+    font-weight: bold;
+    width: 250px;
+    text-align: right;
+    padding: 15px 10px;
+    border-right: 2px solid #5ABDF4;
+}
+
+.actionCard__category {
+    width: 200px;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+    padding: 15px 10px;
+    border-right: 2px solid #5ABDF4;
+}
+
+.actionCard__delete {
+    padding: 15px 10px;
+}
