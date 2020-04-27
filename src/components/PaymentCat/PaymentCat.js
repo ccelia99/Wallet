@@ -1,33 +1,53 @@
 import React from 'react';
 import './PaymentCat.css';
-import food from '../icons/icon-food.svg';
-import varioussmall from '../icons/icon-varioussmall.svg';
-import pharmacy from '../icons/icon-pharmacy.svg';
-import meze from '../icons/icon-meze.svg';
-import animals from '../icons/icon-animals.svg';
-import gas from '../icons/icon-gas.svg';
+
 
 class PaymentCat extends React.Component {
+
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+           
+            data : ""  ,
+            id : "",
+            total : 0.00         
+        }
+
+        this.setTransActTotal = this.setTransActTotal.bind(this);
+    }
+     
+    setTransActTotal(transferValue) {
+        // funktio PaymentCat totalin muuttamiseksi
+        //Tassa vaiheessa viela lisaa transactionista tulevat yhteen 
+
+            let totalOld = parseFloat(this.state.total);
+            let totalNew = parseFloat(transferValue + totalOld);
+      
+            this.setState( { ...this.state,
+                total: totalNew });
+        
+          
+         console.log("transf vanha, uusi ja siirtosumma");
+          console.log(totalOld);
+          console.log(totalNew);
+          console.log(transferValue);
+          }
+   
+          forceUpdate() {
+            console.log("tulosta jotain");
+          }
+
+          
+  
+      
     render() {
         return (
-        <div className="paymentcat">
-            <div className="paymentcat__row">
-            <div className="Food"> <img src={food} alt=""/></div>
-            <div className="Varioussmall"> <img src={varioussmall} alt="" /></div>
-            </div>
-            <div className="paymentcat__row">
-            <div className="Pharmacy"> <img src={pharmacy} alt="" /></div>
-            <div className="Meze"> <img src={meze} alt="" /></div>
-            </div>
-            <div className="paymentcat__row">
-            <div className="Animals"><img src={animals} alt="" /></div>
-            <div className="Gas"><img src={gas} alt="" /></div>
-            </div>
-        </div>
-        );
+            
+            <div className="Payment total">"jotain" </div>
+        ) ;
     }
 }
-export default PaymentCat;
-  
-    
-  
+
+
+export default PaymentCat; 

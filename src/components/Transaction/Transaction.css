@@ -1,3 +1,20 @@
+.wallet {
+    
+} 
+
+.wallet__img {
+  display: flex;
+    position: relative;
+    top: 20%;
+    left: 50%;
+    transform: translate(-75%, -50%);
+  width: 150px; 
+  height: auto;
+  margin-top: 5px;
+}
+
+
+
 .transaction {
     display: flex;
     position: relative;
@@ -28,4 +45,22 @@
     height: 75px;
     
   }
+  .paymentcat {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: space-between;
+    height: 418px;
+   }
+  
+  .paymentcat__row {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .paymentcat__button {
+    width: 100px;
+    height: auto;
+  }
+  
   

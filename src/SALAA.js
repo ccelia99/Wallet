@@ -43,15 +43,15 @@ class Wallet extends React.Component {
   
   <button type="submit" onClick={this.myFunction} ><img src={wallet}/>{parseFloat(this.state.data.saldo).toFixed(2) }</button>
 
-  handleSubmit(event) {
+  handleSubmitWallet(event) {
     event.preventDefault();
     console.log("laheta lomake");
     let data = Object.assign({}, this.state.data);
     data.sum = parseFloat(data.sum);
     this.props.onFormSubmit(data);
   }
-  this.handleSubmit = this.handleSubmit.bind(this);
-  onSubmit={this.handleSubmit}
+  this.handleSubmitWallet = this.handleSubmitWallet.bind(this);
+  onSubmit={this.handleSubmitWallet}
 
   <input type="image" src={wallet} alt="" name="wallet__img" onClick={SubmitForm} />  
   <button name="wallet__img" value='wallet'> <img src={wallet} alt="" > </button>
@@ -90,3 +90,10 @@ function Child(props) {
     <div onClick={() => props.setChanged()} />
   )
 }
+
+this.setState( {
+        data: {
+            ...this.state.data,
+            [name]: value
+        }
+    });

@@ -1,0 +1,10 @@
+.walletSaldo {
+    display: flex;
+    position: relative;
+    top: 20%;
+    left: 50%;
+    
+    color: black;  
+    font-weight: bold;
+    font-size: 50px;
+  }
