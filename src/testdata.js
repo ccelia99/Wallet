@@ -46,55 +46,8 @@ const testdata = [
     category: 'Varioussmall', 
     sum: 352.00,
     date: '2019-01-15' 
-    },
-    { 
-    id: "9",
-    category: 'Pharmacy', 
-    sum: 18.90,
-    date: '2019-01-12' 
-    },
-    { 
-    id: "10",
-    category: 'Meze', 
-    sum: 128.90,
-    date: '2018-12-31'
-    },
-    { 
-    id: "11",
-    category: 'Animals', 
-    sum: 15.00,
-    date: '2019-12-31'
-    },
-    { 
-    id: "12",
-    category: 'Gas', 
-    sum: 16.00,
-    date: '2019-12-15'
-    },
-    { 
-        id: "9",
-        category: 'Pharmacy', 
-        sum: 18.90,
-        date: '2019-01-12' 
-        },
-        { 
-        id: "10",
-        category: 'Meze', 
-        sum: 128.90,
-        date: '2018-12-31'
-        },
-        { 
-        id: "11",
-        category: 'Animals', 
-        sum: 15.00,
-        date: '2019-12-31'
-        },
-        { 
-        id: "12",
-        category: 'Gas', 
-        sum: 16.00,
-        date: '2019-12-15'
-        }
+    }
+    
 ];
 
 export default testdata;

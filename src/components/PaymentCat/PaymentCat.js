@@ -8,23 +8,28 @@ class PaymentCat extends React.Component {
         super(props);
         
         this.state = {
-           
-            data : ""  ,
-            id : "",
-            total : 0.00         
+            data : {
+                type: {
+                    total : 0.00
+                }     
+            }
         }
 
         this.setTransActTotal = this.setTransActTotal.bind(this);
     }
      
-    setTransActTotal(transferValue) {
+    setTransActTotal(transferValue, eId) {
         // funktio PaymentCat totalin muuttamiseksi
         //Tassa vaiheessa viela lisaa transactionista tulevat yhteen 
 
-            let totalOld = parseFloat(this.state.total);
+            let totalOld = parseFloat(this.state.data.type.total);
             let totalNew = parseFloat(transferValue + totalOld);
-      
-            this.setState( { ...this.state,
+            
+            this.setState( { ...this.state.data,
+                type: eId
+             });
+            
+            this.setState( { ...this.state.data.type,
                 total: totalNew });
         
           
@@ -44,7 +49,7 @@ class PaymentCat extends React.Component {
     render() {
         return (
             
-            <div className="Payment total">"jotain" </div>
+            <div className="Payment total">{parseFloat(this.state.data.type.total).toFixed(2) } </div>
         ) ;
     }
 }
