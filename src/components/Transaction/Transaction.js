@@ -1,9 +1,10 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 import './Transaction.css';
+
 import euro from '../icons/icon-euro.svg';
 import wallet from '../icons/icon-wallet.png';
-
-
 import food from '../icons/icon-food.svg';
 import varioussmall from '../icons/icon-varioussmall.svg';
 import pharmacy from '../icons/icon-pharmacy.svg';
@@ -62,9 +63,12 @@ class Transaction extends React.Component {
     console.log(paymenCatType);
 
     let data = Object.assign({}, this.state.data,  {category: paymenCatType } ); //kopio datasta tyhjaan javascript olioon & tyyppi mukaan
+    data.sum = parseFloat(data.sum); //Sum numeroiksi
+    data.id = data.id ? data.id : uuidv4(); //lisataan yksilollinen key-tunniste jokaiselle uudelle tapahtumalle
+
     this.props.onFormSubmit(data); //siirretaan data Items-tasolle
 
-    data.sum = parseFloat(data.sum);
+    
 
     if(data.sum>0) {
       let eName = event.target.className;     
@@ -90,7 +94,7 @@ class Transaction extends React.Component {
         <>
           <form id='transaction' onSubmit={this.handleSubmit}>
             <input type="image" id="wallet" src={wallet} alt="" className="wallet__img"  value={this.state.sum} onClick={this.handleSubmit} />  
-            <label for="wallet__img" className="wallet__saldo">{parseFloat(this.props.walletSaldo).toFixed(2) }</label>
+            <label htmlFor="wallet__img" className="wallet__saldo">{parseFloat(this.props.walletSaldo).toFixed(2) }</label>
 
           <div className="transaction" >
               <input type="number" name="sum" required id="sum" step="0.01"  min="0.01" onChange={this.handleInputChange} />
@@ -100,24 +104,24 @@ class Transaction extends React.Component {
           <div className="paymentcat">
             <div className="paymentcat__row">
               <input type="image" id="food" className="paymentcat__button" src={food} alt="" value={this.state.sum} onClick={this.handleSubmit} />
-              <label for="paymentcat__button" className="payment__saldo">{parseFloat(this.props.food).toFixed(2) }</label>
+              <label htmlFor="paymentcat__button" className="payment__saldo">{parseFloat(this.props.food).toFixed(2) }</label>
               
               <input type="image" id="varioussmall" className="paymentcat__button" src={varioussmall} alt="" value={this.state.sum} onClick={this.handleSubmit} />
-              <label for="paymentcat__button" className="payment__saldo">{parseFloat(this.props.varioussmall).toFixed(2) }</label>
+              <label htmlFor="paymentcat__button" className="payment__saldo">{parseFloat(this.props.varioussmall).toFixed(2) }</label>
             </div>
             <div className="paymentcat__row">
               <input type="image" id="pharmacy" className="paymentcat__button" src={pharmacy} alt=""  value={this.state.sum} onClick={this.handleSubmit} />
-              <label for="paymentcat__button" className="payment__saldo">{parseFloat(this.props.pharmacy).toFixed(2) }</label>
+              <label htmlFor="paymentcat__button" className="payment__saldo">{parseFloat(this.props.pharmacy).toFixed(2) }</label>
 
               <input type="image" id="meze" className="paymentcat__button" src={meze} alt="" value={this.state.sum} onClick={this.handleSubmit} />
-              <label for="paymentcat__button" className="payment__saldo">{parseFloat(this.props.meze).toFixed(2) }</label>
+              <label htmlFor="paymentcat__button" className="payment__saldo">{parseFloat(this.props.meze).toFixed(2) }</label>
             </div>
             <div className="paymentcat__row"> 
               <input type="image" id="animals" className="paymentcat__button" src={animals} alt="" value={this.state.sum} onClick={this.handleSubmit} />
-              <label for="paymentcat__button" className="payment__saldo">{parseFloat(this.props.animals).toFixed(2) }</label>
+              <label htmlFor="paymentcat__button" className="payment__saldo">{parseFloat(this.props.animals).toFixed(2) }</label>
 
               <input type="image" id="gas" className="paymentcat__button" src={gas} alt="" value={this.state.sum} onClick={this.handleSubmit} />
-              <label for="paymentcat__button" className="payment__saldo">{parseFloat(this.props.gas).toFixed(2) }</label>
+              <label htmlFor="paymentcat__button" className="payment__saldo">{parseFloat(this.props.gas).toFixed(2) }</label>
             </div>
 			    </div>
         

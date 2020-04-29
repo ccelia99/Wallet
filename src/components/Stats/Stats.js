@@ -10,7 +10,7 @@ function Stats(props) {
 
   let rows = props.data.map(action => {
     return(
-     <ActionCard data={action} />
+     <ActionCard data={action} key={action.id} />
     );
   }
 );
