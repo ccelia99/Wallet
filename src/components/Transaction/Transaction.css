@@ -1,77 +1,90 @@
-.wallet {
-    
-} 
 
 .wallet__img {
   display: flex;
-    position: relative;
-    top: 20%;
-    left: 50%;
-    transform: translate(-75%, -50%);
+  position: relative; 
+  margin: 0 auto; 
   width: 150px; 
   height: auto;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
-.wallet__saldo {
+.wallet__saldo {  
   display: flex;
   position: relative;
-  top: 20%;
-  left: 50%;
-  
+  justify-content: center;
   color: black;  
   font-weight: bold;
   font-size: 50px;
 }
 
-
-
 .transaction {
     display: flex;
     position: relative;
     justify-content: center;
-    margin-top: 25px;
-    margin-bottom: 45px;
-  }
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
     
   
-  .transaction input {
-    position: relative;
-    justify-content: center; 
-    text-align: center;   
-    width: 200px;
-    height: 75px;
-    background: #FFFFFF;
-    border: 1px solid #FFFFFF;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-size: 40px; 
-    font-weight: bold;  
+.transaction input {
+  position: relative;
+  justify-content: center; 
+  text-align: center;   
+  width: 200px;
+  height: 75px;
+  background: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 40px; 
+  font-weight: bold;  
+}
+
+.euro {
+  display: flex;
+  position: relative;
+  width: 75px;
+  height: 75px;
+  
+}
+.paymentcat {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: space-between;  
+  padding: 10px;
   }
-  
-  .euro {
-    display: flex;
-    position: relative;
-    width: 75px;
-    height: 75px;
-    
-  }
-  .paymentcat {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    justify-content: space-between;
-    height: 418px;
-   }
-  
-  .paymentcat__row {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .paymentcat__button {
-    width: 100px;
-    height: auto;
-  }
-  
-  
+
+.paymentcat__row {
+  display: flex;
+  justify-content: space-around;
+}
+.payment__name {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);  
+  position: relative;
+  font-family: 'Roboto', cursive;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  text-align: left;
+}
+
+.paymentcat__button {
+  width: 100px;
+  height: auto;
+}
+
+.payment__saldo {
+  color: black;  
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.paymentcat__item {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  padding: 10px;
+}
+

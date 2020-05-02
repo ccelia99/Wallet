@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css'
 import testdata from './testdata';
+import firebase from './firebase';
 
 import Header from './components/Header/Header';
 import Items from './components/Items/Items';
@@ -17,20 +18,24 @@ class App extends Component {
     super(props);
     this.state = {
       data: testdata,
-      walletSaldo : 0.00,
-      meze :  0.00,
-      food : 0.00,
-      varioussmall : 0.00,
-      pharmacy : 0.00,
-      animals : 0.00,
-      gas : 0.00
-
+      walletData : {
+        walletSaldo : 0.00,
+        meze :  0.00,
+        food : 0.00,
+        varioussmall : 0.00,
+        pharmacy : 0.00,
+        animals : 0.00,
+        gas : 0.0
+      }
     }
+    this.dbRef = firebase.firestore();
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.setWalletandCat = this.setWalletandCat.bind(this);
   }
 
-   
+  componentDidMount() {
+    this.refData = this.dbRef.collection('data');
+  }
 
   handleFormSubmit(newdata) {
     let storedata =  this.state.data.slice();
@@ -41,54 +46,58 @@ class App extends Component {
       const bDate = new Date(b.date);
       return bDate.getTime() - aDate.getTime();     
     });
-
-
     this.setState({
         data: storedata
     });
-  }
 
-  setWalletandCat(sum, eId) {
-    // funktio Walletin saldon muuttamiseksi
-    //lisaa Transactionista tulevan summan lompakoon
-    //PaymentCatin napeista tuleva summa on negatiivinen
+    this.refData.doc(newdata.id).set({newdata});  //tallentaa uuden tapahtuman Firebase-tietokantaan
+
+   }
+
+  setWalletandCat(catClass, catName, trsum) {
+    // funktio Walletin saldon muuttamiseksi ja maksuluokan saldojen muuttamiseksi. 
+    // Saa parametreina Treansactionista 
+        //catClass (onko tapatuman hyvaksynyt lompakko vai maksuluokka)
+        //catName (maksuluokan nimi (jos on wallet, tuottaa wallet__img))
+        //trsum (siirrettava summa)
+
+    //jos catClass on maksuluokka, niin vahentaa summan lompakosta ja lisaa maksuluokkaan
+    //muuten lisaa Transactionista tulevan summan lompakoon
     
         
-        let walletSaldo__old = this.state.walletSaldo;
-        this.setState({ walletSaldo: (sum + walletSaldo__old) });
-        this.setState({mezeSaldo: sum});
-        
-    
-        console.log("lompakkosaldo; edellinen ja uusi ");
-        console.log(walletSaldo__old);
-        console.log(sum);  
-    
-    
-    // siirtaa summan ko. maksuluokan state muuttujaan , jos summa on 
-    // negatiivinen eli tulee PaymentCatin napeista
-      if (sum<0) {
-        let oldSaldo = this.state[eId];
-        let paySum = ((sum*(-1)) + oldSaldo);
-        this.setState( {[eId] : paySum} )
-       }     
+    let walletSaldo__old = parseFloat(this.state.walletData.walletSaldo);
+    let catNameSaldo__old = parseFloat(this.state.walletData[catName]);
+
+   
+    if (catClass === "paymentcat__button" ) {
+      this.setState({ 
+        walletData: {
+          ...this.state.walletData,
+          walletSaldo : parseFloat( walletSaldo__old - trsum),
+          [catName] : parseFloat(catNameSaldo__old + trsum)
+        }
+      });
+    }
+    else {
+      this.setState({ 
+        walletData: {
+          ...this.state.walletData,
+          walletSaldo : parseFloat( walletSaldo__old = trsum)
+        }
+      });
+    }
   }
-  
  
-
-
   render() {
 
-
     return (
-
-      
-
       <>
         <Router>          
           <div className="App" >   
           <Header />         
             <Route path="/" exact render={() => 
-              <Items onFormSubmit={this.handleFormSubmit} setWallet={this.setWalletandCat} walletSaldo={this.state.walletSaldo} meze={this.state.meze} food={this.state.food} varioussmall={this.state.varioussmall} pharmacy={this.state.pharmacy} animals={this.state.animals} gas={this.state.gas}/>} />
+              <Items onFormSubmit={this.handleFormSubmit} setWallet={this.setWalletandCat} walletData={this.state.walletData} />} />
+              
             <Route path="/stats" render={() => <Stats data={this.state.data} />} />
             <Route path="/graph" component={Graph} />
             <Route path="/settings" component={Settings} />

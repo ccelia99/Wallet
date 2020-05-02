@@ -49,7 +49,7 @@ class PaymentCat extends React.Component {
     render() {
         return (
             
-            <div className="Payment total">{parseFloat(this.state.data.type.total).toFixed(2) } </div>
+           
         ) ;
     }
 }
