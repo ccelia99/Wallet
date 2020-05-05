@@ -13,12 +13,10 @@ import animals from '../icons/icon-animals.svg';
 import gas from '../icons/icon-gas.svg';
 
 
-class Transaction extends React.Component {
-
-  
+class Transaction extends React.Component { 
 
   constructor(props) {
-    super(props);
+    super(props);    
     this.state = {
       data: {
           sum : 0.00,
@@ -26,10 +24,10 @@ class Transaction extends React.Component {
       }
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this); 
-    
+    this.handleSubmit = this.handleSubmit.bind(this);     
   }
-  
+ 
+
   
   handleInputChange(event) {
 // tallennetaan transaction-kentasta tuleva tapahtuma state-muuttujaan
@@ -51,11 +49,11 @@ class Transaction extends React.Component {
           date : todayDate         
         }
       }); 
+
     } 
     else { 
       alert();
-    }
-    
+    }    
   }
     
  
@@ -63,29 +61,29 @@ class Transaction extends React.Component {
     
     event.preventDefault(); 
     const target = event.target;  
-    let paymenCatType = target.id;  //paymentCategoryn tyyppi eventista; maksuluokka vai wallet__img
+    let paymenCatType = target.id;              //paymentCategoryn tyyppi eventista; maksuluokka vai wallet__img
     let targetClassName = target.className;     //maksuluokan nimi
 
     let data = Object.assign({}, this.state.data,  {category: paymenCatType } ); //kopio datasta tyhjaan javascript olioon & tyyppi mukaan
     data.id = data.id ? data.id : uuidv4();     //lisataan yksilollinen key-tunniste jokaiselle uudelle tapahtumalle
     this.props.onFormSubmit(data);              //siirretaan data Items-tason kautta App:iin 
 
-    this.props.setWallet(targetClassName, paymenCatType, this.state.data.sum); //siirretaan maksuluokka, luokan nimi ja summa App:iin
-    
+    this.props.setWallet(targetClassName, paymenCatType, this.state.data.sum); //siirretaan maksuluokka, luokan nimen ja maksetun summa App:iin
+   
   }
-
-  
 
   // render sisaltaa transaction-lomakkeen ja sen image-buttonit sen hyvaksymiseen; wallet saldoineen ylhaalla ja 
   // maksuluokat alapuolella
     render () {
+
+      
       
       return (        
         <>
           <form id='transaction' onSubmit={this.handleSubmit}>
            
             <input type="image" id="wallet" src={wallet} alt="" className="wallet__img"  value={this.state.sum} onClick={this.handleSubmit} />  
-            <label htmlFor="wallet__img" className="wallet__saldo">{parseFloat(this.props.walletData.walletSaldo).toFixed(2) }</label>
+      <label htmlFor="wallet__img" className="wallet__saldo">{parseFloat(this.props.walletData.walletSaldo).toFixed(2)}</label>
 
             <div className="transaction" >
                 <input type="number" name="sum" required id="sum" step="0.01"  min="0.01" onChange={this.handleInputChange} />

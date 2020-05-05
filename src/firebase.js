@@ -1,10 +1,7 @@
-
-
 import * as firebase from "firebase/app";
 import "firebase/firestore";
-
-// Add the Firebase services that you want to use
 import "firebase/auth";
+
 
   // Your web app's Firebase configuration
   var firebaseConfig = {
@@ -19,4 +16,9 @@ import "firebase/auth";
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
-  export default firebase;
+   // kayttjan autentikointi
+   export const provider = new firebase.auth.GoogleAuthProvider();
+   export const auth = firebase.auth();
+ 
+   export default firebase;
+ 

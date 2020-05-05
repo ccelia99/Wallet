@@ -6,27 +6,39 @@ import Content from '../Content/Content';
 import './Stats.css'
 
 
-function Stats(props) {
+class Stats extends Component {
 
-  let rows = props.data.map(action => {
-    return(
-     <ActionCard data={action} key={action.id} />
-    );
+  constructor(props) {
+    super(props);    
+    this.state = {
+          
+    };
+   
   }
-);
+
+ 
+  
+
+
+  render() {
+    let rows = this.props.data.map(action => {      //hakee ja tulostaa maksutapahtumat Appin data-muuttujasta
+      return(
+        <ActionCard data={action} key={action.id}  onDeleteItem={this.props.onDeleteItem} />
+    )
+    });
 
   return (
-    
-      <div className="stats" >
-        <h1> Transactions</h1>
-          <Content>
-            {rows}
-          </Content>
+
+    <div className="stats" >
+      <h2> Transactions</h2>
+      <Content>
+          {rows}
+      </Content>
+    </div>   
          
-        </div>
-         
-          
   );
 }
 
- export default Stats; 
+}
+
+export default Stats; 

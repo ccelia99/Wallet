@@ -1,0 +1,27 @@
+.settings h2{    
+    justify-content: center;    
+    font-family: 'Roboto', cursive;
+    text-align: center;    
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;    
+}
+
+.settings__profile {
+    display: flex;
+    justify-content: space-between;
+}
+
+.settings__userdata {
+    display: flex;
+    align-items: center;
+}
+
+.settings__userdata img {
+    width: 75;
+    height: 75px;
+    border-radius: 50%;
+    margin: 0.5em;
+    align-items: center;
+
+}

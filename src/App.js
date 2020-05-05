@@ -9,6 +9,8 @@ import Stats from './components/Stats/Stats';
 import Graph from './components/Graph/Graph';
 import Settings from './components/Settings/Settings';
 import Menu from './components/Menu/Menu';
+import Content from './components/Content/Content';
+import Button from './components/buttons/';
 
 
 class App extends Component {
@@ -18,43 +20,53 @@ class App extends Component {
     super(props);
     this.state = {
       data: [],
-      walletData : []     
+      walletData : [],
+      user: null,
+      error : null     
     }
 
     this.dbRef = firebase.firestore();
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.setWalletandCat = this.setWalletandCat.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
     
   }
 
   componentDidMount() {
-    this.refData = this.dbRef.collection('data');
-    this.refData2 = this.dbRef.collection('walletData');
-
-    this.refData.orderBy("date", "desc").onSnapshot((docs) => {  //hakee datan DBsta ja jarjestaa sen uusin ensin
-      let data = [];
-      docs.forEach((doc) => {
-        let docdata = doc.data();
-        data.push(docdata);
-      });
-      this.setState({
-        data: data
-      });
-    });
-
-        
-    this.refData2.get().then(snapshot => {
-      snapshot.docs.forEach((doc) => {
-   
-        this.setState({
-          walletData: {
-              ...this.state.walletData,
-              [doc.id]: doc.data().total
-          }
-        });
-      });
-    });
     
+    auth.onAuthStateChanged((user ) =>{
+      if (user ) {
+        this.setState({
+          user : user
+        });
+        this.refData = this.dbRef.collection("users").doc(user.uid).collection('data');
+        this.refData2 = this.dbRef.collection("users").doc(user.uid).collection('walletData');
+    
+        this.refData.orderBy("date", "desc").onSnapshot((docs) => {  //hakee datan DBsta ja jarjestaa sen uusin ensin
+          let data = [];
+          docs.forEach((doc) => {
+            let docdata = doc.data();
+            data.push(docdata);
+          });
+          this.setState({
+            data: data
+          });
+        });
+         
+        this.refData2.get().then(snapshot => {
+          snapshot.docs.forEach((doc) => {
+            this.setState({
+              walletData: {
+                  ...this.state.walletData,
+                  [doc.id]: doc.data().total
+              }
+            });
+          });
+        });
+      }
+    });
   }
 
   
@@ -64,20 +76,20 @@ class App extends Component {
 
    }
 
- // funktio Walletin saldon muuttamiseksi ja maksuluokan saldojen muuttamiseksi. 
-    // Saa parametreina Treansactionista 
-        //catClass (onko tapatuman hyvaksynyt lompakko vai maksuluokka)
-        //catName (maksuluokan nimi (jos on wallet, tuottaa wallet__img))
-        //sum (siirrettava summa)
-
-    //jos catClass on maksuluokka, niin vahentaa summan lompakosta ja lisaa maksuluokkaan
-    //muuten lisaa Transactionista tulevan summan lompakoon
-
   setWalletandCat(catClass, catName, sum) {
+
+ /* funktio Walletin saldon muuttamiseksi ja maksuluokan saldojen muuttamiseksi. 
+Saa parametreina Treansactionista 
+ - catClass (onko tapatuman hyvaksynyt lompakko vai maksuluokka)
+ - catName (maksuluokan nimi (jos on wallet, tuottaa wallet__img))
+ - sum (siirrettava summa)
+jos catClass on maksuluokka, niin vahentaa summan lompakosta ja lisaa maksuluokkaan,
+muuten lisaa Transactionista tulevan summan lompakoon */
+
+  
     
     let walletSaldo__old = parseFloat(this.state.walletData.walletSaldo);
     let catNameSaldo__old = parseFloat(this.state.walletData[catName]);
-
     
     if (catClass === "paymentcat__button" ) {       //onko tapahutma maksuluokka
       
@@ -107,10 +119,91 @@ class App extends Component {
         }
       });
     }
-        
+  }
+
+  handleDeleteItem(deldata) {
+    let walletSaldo__old = parseFloat(this.state.walletData.walletSaldo);
+    let catNameSaldo__old = parseFloat(this.state.walletData[deldata.category]);
+    
+    if (deldata.category === "wallet" ) {       //onko tapahutma maksuluokka
+           
+      let total =  parseFloat( walletSaldo__old - deldata.sum);
+      this.refData2.doc('walletSaldo').update({total});  //paivittaa lompakon uuden summan total-kenttaan Firebase-tietokantaan
+
+      this.setState({    
+        walletData: {
+            ...this.state.walletData,
+            walletSaldo : parseFloat( total),
+        }
+      }); 
+
+    }
+    else {
+      let total = parseFloat(catNameSaldo__old - deldata.sum);
+      this.refData2.doc(deldata.category).update({total});  //paivittaa ko. maksuluokan total-kentan Firebase-tietokantaan
+
+      let catSumNew = total;
+
+      total = parseFloat( walletSaldo__old + deldata.sum);
+      this.refData2.doc('walletSaldo').update({total});  //paivittaa lompakon uuden summan total-kenttaan Firebase-tietokantaan   
+      
+      this.setState({    
+        walletData: {
+            ...this.state.walletData,
+            walletSaldo : parseFloat( total),
+            [deldata.category] : parseFloat(catSumNew) 
+        }
+      });
+    }
+
+    this.refData.doc(deldata.id).delete().then().catch(error => {console.error("Virhe tietoa pistettaessa: ", error)});   
+  }
+  
+  login() {
+    auth.signInWithPopup(provider).then((result) => {
+      const user = result.user;
+      this.setState({
+        user : user,
+        error : null
+      });
+    }).catch((error) => {
+      // Handle Errors here.
+       const errorMessage = error.message;
+       this.setState({
+         error: errorMessage
+       })
+    });
+  }
+
+  logout() {
+    auth.signOut().then(() =>  {
+      this.setState({
+        user : null
+      });
+      this.refData = null;
+      // Sign-out successful.
+   });
   }
  
   render() {
+   
+    if (!this.state.user) {
+      return (
+        <Router>
+          <div className="App" >   
+          <Header /> 
+            <Content>
+              <p>You have not sign in yet!</p>
+              <p><Button primary onClick={this.login} >Sign in</Button></p>
+              {this.state.error?<p>{this.state.error}</p>:null}
+            </Content>
+            <Menu />
+          </div>
+        </Router>
+
+      );
+    }
+
 
     return (
          
@@ -121,9 +214,10 @@ class App extends Component {
             <Route path="/" exact render={() => 
                <Items onFormSubmit={this.handleFormSubmit} setWallet={this.setWalletandCat} walletData={this.state.walletData}  />} />
               
-            <Route path="/stats" render={() => <Stats data={this.state.data} />} />
+            <Route path="/stats" render={() => <Stats data={this.state.data} onDeleteItem={this.handleDeleteItem} />} />
             <Route path="/graph" component={Graph} />
-            <Route path="/settings" component={Settings} />
+            <Route path="/settings" render={() => <Settings onLogout = {this.logout}
+                                                user={this.state.user} /> } /> 
             <Menu /> 
           </div>
         </Router>             
