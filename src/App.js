@@ -43,32 +43,58 @@ class App extends Component {
         });
         this.refData = this.dbRef.collection("users").doc(user.uid).collection('data');
         this.refData2 = this.dbRef.collection("users").doc(user.uid).collection('walletData');
-    
+
+        this.refData2.get().then(snapshot => { 
+          
+          
+          if (snapshot.empty === false ) {
+              snapshot.docs.forEach((doc) => {            
+                this.setState({
+                  walletData: {
+                      ...this.state.walletData,
+                      [doc.id]: doc.data().total
+                  }
+              });           
+          });
+        } 
+        else {
+          this.setState({
+            walletData: {
+              ...this.state.walletData, 
+                walletSaldo : 0.00,
+                meze :  0.00,
+                food : 0.00,              
+                varioussmall : 0.00,
+                pharmacy : 0.00,
+                animals : 0.00,
+                gas : 0.00
+            }
+          });
+
+          this.refData2.doc('walletSaldo').set({total : 0.00});
+          this.refData2.doc('meze').set({total : 0.00});
+          this.refData2.doc('food').set({total : 0.00});
+          this.refData2.doc('varioussmall').set({total : 0.00});
+          this.refData2.doc('pharmacy').set({total : 0.00});
+          this.refData2.doc('animals').set({total : 0.00});
+          this.refData2.doc('gas').set({total : 0.00});
+        }
+      });      
+          
         this.refData.orderBy("date", "desc").onSnapshot((docs) => {  //hakee datan DBsta ja jarjestaa sen uusin ensin
           let data = [];
           docs.forEach((doc) => {
             let docdata = doc.data();
-            data.push(docdata);
+            data.push(docdata);            
           });
           this.setState({
             data: data
           });
         });
-         
-        this.refData2.get().then(snapshot => {
-          snapshot.docs.forEach((doc) => {
-            this.setState({
-              walletData: {
-                  ...this.state.walletData,
-                  [doc.id]: doc.data().total
-              }
-            });
-          });
-        });
       }
     });
   }
-
+  
   
   handleFormSubmit(newdata) {
     
@@ -94,10 +120,10 @@ muuten lisaa Transactionista tulevan summan lompakoon */
     if (catClass === "paymentcat__button" ) {       //onko tapahutma maksuluokka
       
       let total = parseFloat(catNameSaldo__old + sum);
-      this.refData2.doc(catName).update({total});  //paivittaa ko. maksuluokan total-kentan Firebase-tietokantaan
+      this.refData2.doc(catName).set({total});  //paivittaa ko. maksuluokan total-kentan Firebase-tietokantaan
 
       total =  parseFloat( walletSaldo__old - sum);
-      this.refData2.doc('walletSaldo').update({total});  //paivittaa lompakon uuden summan total-kenttaan Firebase-tietokantaan
+      this.refData2.doc('walletSaldo').set({total});  //paivittaa lompakon uuden summan total-kenttaan Firebase-tietokantaan
 
       this.setState({    
         walletData: {
@@ -110,7 +136,7 @@ muuten lisaa Transactionista tulevan summan lompakoon */
     }
     else {
       let total = parseFloat( walletSaldo__old + sum);
-      this.refData2.doc('walletSaldo').update({total});  //paivittaa lompakon uuden summan total-kenttaan Firebase-tietokantaan   
+      this.refData2.doc('walletSaldo').set({total});  //paivittaa lompakon uuden summan total-kenttaan Firebase-tietokantaan   
       
       this.setState({    
         walletData: {
@@ -181,6 +207,7 @@ muuten lisaa Transactionista tulevan summan lompakoon */
         user : null
       });
       this.refData = null;
+      this.refData2 = null;
       // Sign-out successful.
    });
   }
