@@ -1,11 +1,14 @@
 .content {
 
     max-height: 720px;
-    min-height: 720px;
+    min-height: 600px;
+    margin: 0 auto;
     padding-bottom: 10px;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     position: relative;
+   
+    
   }
   
   ::-webkit-scrollbar {

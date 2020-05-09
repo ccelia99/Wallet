@@ -1,14 +1,16 @@
 .header {
     display: flex;
     justify-content: center;
-    padding:18px 118.5px;
+    padding-top: 0.01em;
+    padding-bottom: 0.1em;
+    padding-left: 118.5px;
+    padding-right: 118.5px;
     width: auto;
-    max-height: 120px;
     font-family: 'Roboto', cursive;
     text-align: center;    
     font-style: normal;
     font-weight: normal;
-    font-size: 64px;  
+    font-size: 46px;  
      
     color: #FFFFFF;
     background: #5ABDF4;

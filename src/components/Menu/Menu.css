@@ -3,10 +3,10 @@
   background: #5ABDF4;
   justify-content: space-evenly;
   align-items: center;
-  padding: 10px;
+  padding: 5px;
     
-  max-height: 40px;
-  min-height: 40px;
+  max-height: 30px;
+  min-height: 30px;
   width: auto;
 
  }

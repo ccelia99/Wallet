@@ -1,3 +1,10 @@
+/*ActionCard esittaa Stats-luokasta tulevan alkion
+riveina summa, paivamaara ja maksuluokka.
+
+handleDeleteItem(event) 
+lahettaa poistettavan data-alkion tidot Stats-tason kautta App:iin
+*/
+
 import React, { Component } from 'react';
 import './ActionCard.css';
 
@@ -13,7 +20,7 @@ class ActionCard extends Component {
     
     handleDeleteItem(event) {
         event.preventDefault();
-        this.props.onDeleteItem(this.state.data);     //siirretaan poistettava data Stats-tason kautta App:iin        
+        this.props.onDeleteItem(this.state.data);             
     }
 
     render() {

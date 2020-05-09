@@ -1,3 +1,22 @@
+/*
+Transaction-luokka sisaltaa transaction-lomakkeen, johon kayttaja syottaa halutun summan,
+seka image-buttonit sen hyvaksymiseen; wallet saldoineen ylhaalla ja 
+maksuluokat alapuolella.
+
+Luokan state- muuttujiin sum ja date talletetaan kayttajan asettama summa seka
+kuluva paiva.
+
+handleInputChange(event) 
+Funktio tallentaa transaction-kentasta tuleva tapahtuman state-muuttujiin.
+
+handleSubmit(event) 
+Funktio saa parametrina eventin, josta selvitetaan, onko tapahtuma wallet vai joku
+maksuluokka, seka maksuluokan nimi. Lisaksi tapahtumaan lisataan yksilollinen id.
+Funktio valittaa maksutapahtuman tiedot App-luokan funktioille handleFormSubmit(newdata)
+ja setWalletandCat(catClass, catName, sum) .
+
+*/
+
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -24,30 +43,25 @@ class Transaction extends React.Component {
       }
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);     
+    this.handleSubmit = this.handleSubmit.bind(this); 
   }
  
-
-  
   handleInputChange(event) {
-// tallennetaan transaction-kentasta tuleva tapahtuma state-muuttujaan
 
     event.preventDefault(); 
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    
+    const value = target.type === 'checkbox' ? target.checked : target.value;    
 
-    if ( value>0 )  { //tarkistetaan, ettei kayttaja syota negatiivisia lukuja tai o:aa
-
+    if ( value>0 )  { //tarkistetaan, ettei kayttaja syota negatiivisia lukuja tai 0:aa
     //luodaan timestap ko. paivalle ja tallennetaan se state-muuttujaan date
-    let todayDate = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(new Date())
+    let todayDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(new Date())
 
     this.setState( {
       data: {
           ...this.state.data,
           sum : parseFloat(value),
           date : todayDate         
-        }
+        }        
       }); 
 
     } 
@@ -56,8 +70,7 @@ class Transaction extends React.Component {
     }    
   }
     
- 
-  handleSubmit(event) {
+   handleSubmit(event) {
     
     event.preventDefault(); 
     const target = event.target;  
@@ -66,36 +79,41 @@ class Transaction extends React.Component {
 
     let data = Object.assign({}, this.state.data,  {category: paymenCatType } ); //kopio datasta tyhjaan javascript olioon & tyyppi mukaan
     data.id = data.id ? data.id : uuidv4();     //lisataan yksilollinen key-tunniste jokaiselle uudelle tapahtumalle
-    this.props.onFormSubmit(data);              //siirretaan data Items-tason kautta App:iin 
+    this.props.onFormSubmit(data);              //siirretaan data  App:iin 
 
     this.props.setWallet(targetClassName, paymenCatType, this.state.data.sum); //siirretaan maksuluokka, luokan nimen ja maksetun summa App:iin
    
-  }
-
-  // render sisaltaa transaction-lomakkeen ja sen image-buttonit sen hyvaksymiseen; wallet saldoineen ylhaalla ja 
-  // maksuluokat alapuolella
+  }  
+    
     render () {
-
-      
-      
       return (        
-        <>
+        <div>
           <form id='transaction' onSubmit={this.handleSubmit}>
-           
-            <input type="image" id="wallet" src={wallet} alt="" className="wallet__img"  value={this.state.sum} onClick={this.handleSubmit} />  
-      <label htmlFor="wallet__img" className="wallet__saldo">{parseFloat(this.props.walletData.walletSaldo).toFixed(2)}</label>
 
-            <div className="transaction" >
-                <input type="number" name="sum" required id="sum" step="0.01"  min="0.01" onChange={this.handleInputChange} />
-                <img src={euro} alt="" className="euro" />
+            <div className="wallet">
+             <input type="image" id="wallet" src={wallet} alt="" className="wallet__img"  value={this.state.sum} onClick={this.handleSubmit} /> 
+              <div className="wallet__label" >
+                <label htmlFor="wallet__img" className="payment__name">Money in Wallet</label><br/>
+                <label htmlFor="wallet__img" className="wallet__saldo">{parseFloat(this.props.walletData.walletSaldo).toFixed(2)}</label>
+              </div>
             </div>
             
+            <div className="transaction__area">
+              <label htmlFor="transaction" className="transaction__label">Add a sum and set it into the wallet</label>
+              <div>
+                  <div className="transaction" >                  
+                    <input type="number" name="sum" required id="sum"  step="0.01"  min="0.01" onChange={this.handleInputChange} />
+                    <img src={euro} alt="" className="euro" />
+                  </div>
+              </div>  
+              <label htmlFor="transaction" className="transaction__label">...or as a payment to a category below.</label>
+            </div>
 
           <div className="paymentcat">
             <div className="paymentcat__row">
               <div className="paymentcat__item">
                 <label htmlFor="paymentcat__button" className="payment__name">Food</label>
-                <input type="image" id="food" className="paymentcat__button" src={food} alt="" value={this.state.sum} onClick={this.handleSubmit} onMouseOver={e => console.log(e)} />
+                <input type="image" id="food" className="paymentcat__button" src={food} alt="" value={this.state.sum} onClick={this.handleSubmit} />
                 <label htmlFor="paymentcat__button" className="payment__saldo">{parseFloat(this.props.walletData.food).toFixed(2) }</label>
               </div>
 
@@ -136,7 +154,7 @@ class Transaction extends React.Component {
           </div>
 			           
         </form>  
-        </> 
+        </div> 
        
        );
     }

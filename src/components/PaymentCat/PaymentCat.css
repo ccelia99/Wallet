@@ -1,0 +1,32 @@
+
+.burger {
+    width: 70%;
+    height: 60vw;        /* height relates with viewport width */
+    max-height: 15.6em;  /* content's max-width * height = 26em * 0.6 = 15.6em */ 
+    margin: 0 auto 0.5em auto;
+  }
+  
+  .burger__img {
+    width: 100%;
+  }
+  
+  .wallet__img--pressed {
+    width: 50%;
+  }
+  .wallet {
+    display: flex;
+    position: relative;
+    justify-content: space-around;
+    margin-top: 15px;
+  }
+  
+  .wallet__img {
+    display: flex;
+    position: relative; 
+    margin: 0 auto; 
+    width: 80px;
+    height: auto;
+    padding: 3px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+  }
