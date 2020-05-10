@@ -1,9 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent, getByLabelText } from '@testing-library/react';
 import App from './App';
+import Transaction from './components/Transaction/Transaction';
 
-test('renders learn react link', () => {
+test('renderoi sivulle tekstin Wallet', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const headerElement = getByText(/Wallet/i);
+  expect(headerElement).toBeInTheDocument();
 });
+
+
